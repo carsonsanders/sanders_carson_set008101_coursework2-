@@ -7,7 +7,11 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/ceaser', function(req, res, next) {
-	res.render('cipher', {title: 'Hello Page'});
+	res.render('cipher', {title: 'ceaser'});
+});
+
+router.get('/morse', function(req, res, next) {
+	res.render('cipher', {title: 'morse'});
 });
 
 module.exports = router;

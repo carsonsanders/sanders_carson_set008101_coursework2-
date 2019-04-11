@@ -3,10 +3,24 @@ html
 	head
 		title= title
 		link(rel='stylesheet', href='/stylesheets/style.css')
+		script(src='/javascripts/Cipher.js')
 	body
-		div(class="topnav") 
-			a(class="active" href="/ceaser") Ceaser Cipher 
-			a(href="/morse") Morse Code
+		case title
+			when 'ceaser'
+				div(class="topnav") 
+					a(class="active" href="/ceaser") Ceaser Cipher 
+					a(href="/morse") Morse Code
+			when 'morse'
+				div(class="topnav") 
+					a(href="/ceaser") Ceaser Cipher 
+					a(class="active" href="/morse") Morse Code
+			default
+				div(class="topnav") 
+					a(href="/ceaser") Ceaser Cipher 
+					a(href="/morse") Morse Code
+			
 		form(id="form1") Message:
 			input(name='message', type='text', size='30')
+		button(onClick="encrypt()") Encrypt!
+		p(id="output")
 	
