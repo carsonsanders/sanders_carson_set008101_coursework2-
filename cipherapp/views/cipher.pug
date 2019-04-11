@@ -21,6 +21,23 @@ html
 			
 		form(id="form1") Message:
 			input(name='message', type='text', size='30')
-		button(onClick="encrypt()") Encrypt!
+		case title
+			when 'ceaser'
+				button(onClick="encrypt()") Encrypt!
+			when 'morse'
+				button(onClick="morse()") Encrypt!
 		p(id="output")
+		case title
+			when 'ceaser'
+				form(id="form2") Message:
+					input(name="message2" type="text" size="30")
+				button(onClick="decrypt()") Decrypt!
+				p(id="output2")
+			when 'morse'
+				button(onclick="playSound()") Play Sound!
+				button(onclick="dashWrite()") dash
+				button(onclick="starWrite()") star
+				button(onclick="space()") space
+				p(id="morseOut")
+				p(id="textOut")
 	
