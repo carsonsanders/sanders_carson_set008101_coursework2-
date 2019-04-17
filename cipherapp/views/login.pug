@@ -1,0 +1,16 @@
+doctype html
+html
+	head
+		title= title
+		link(rel='stylesheet', href='/stylesheets/style.css')
+	body
+		
+		div(class="topnav") 
+			a(href="/ceaser") Ceaser Cipher 
+			a(href="/morse") Morse Code
+			a(class="active" href="/login") Login
+			
+		form(method="POST" action="/login") Username:
+			input(name='username', type='text', size='30')
+			input(name='password', type='text', size='30')
+			input(type='submit')

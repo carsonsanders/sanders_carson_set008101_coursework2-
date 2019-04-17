@@ -1,3 +1,4 @@
+
 /* exported myFunction */
 function encrypt() {
     
@@ -208,3 +209,4 @@ function updateMorse(){
 	document.getElementById("textOut").innerHTML = textOut;
 
 }
+
