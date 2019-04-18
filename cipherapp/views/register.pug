@@ -2,7 +2,6 @@ doctype html
 html
 	head
 		title= title
-		username = username
 		link(rel='stylesheet', href='/stylesheets/style.css')
 	body
 		
@@ -10,18 +9,16 @@ html
 			a(href="/ceaser") Ceaser Cipher 
 			a(href="/morse") Morse Code
 			a(href="/messageroom") Message Room
-			a(class="active" href="/login") Login
-			a(href="/register") Register
+			a(href="/login") Login
+			a(class="active" href="/register") Register
 			
-		form(method="POST" action="/login") Username:
+		form(method="POST" action="/register") Username:
 			input(name='username', type='text', size='30')
 			input(name='password', type='text', size='30')
 			input(type='submit')
-			
+		
 		case title
-			when 'loggedin'
-				p Welcome #{username}
-			when 'loginfail'
-				p Username or password incorrect
+			when 'registered'
+				p Your account has been registered. Please log in
 			default
-				p Please enter your username and password
+				p Please input a username and password.

@@ -3,6 +3,7 @@ var dbPath = path.resolve(__dirname , 'cipher.db')
 var loggedIn = false;
 var loginStatus = "";
 var username = "";
+var registerStatus = "";
 
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database(dbPath, (err => {
@@ -14,7 +15,7 @@ var db = new sqlite3.Database(dbPath, (err => {
 db.serialize( function () {
 db.run("CREATE TABLE IF NOT EXISTS users (username TEXT, password TEXT)");
 db.run("CREATE TABLE IF NOT EXISTS messages (message TEXT, username TEXT)");
-db.run("INSERT INTO users VALUES('admin', 'pass')");
+//db.run("INSERT INTO users VALUES('admin', 'pass')");
 });
 
 var express = require('express');
@@ -99,7 +100,24 @@ router.post('/login', function(req, res, next) {
 	}else loginStatus = "loginfail";
 	res.redirect('/login');
 	});
+})
+
+router.get('/register', function(req, res, next) {
+	res.render('register', {title: registerStatus});
+});
+
+router.post('/register', function(req, res, next) {
+	var registerName = req.body.username;
+	var registerPass = req.body.password;
 	
+	db.run(`INSERT INTO users(username, password) VALUES(?,?)`, [registerName, registerPass],function(err){
+		if (err){
+			return console.log(err.message);
+		}
+		registerStatus = "registered";
+		console.log("New account created");
+		res.redirect('/register');
+	});
 
 })
 

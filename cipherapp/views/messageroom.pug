@@ -3,6 +3,7 @@ html
 	head
 		title= title
 		messages = messages
+		username = username
 		link(rel='stylesheet', href='/stylesheets/style.css')
 	body
 		
@@ -11,6 +12,7 @@ html
 			a(href="/morse") Morse Code
 			a(class="active" href="/messageroom") Message Room
 			a(href="/login") Login
+			a(href="/register") Register
 			
 		
 		form(method="POST" action="/messageroom") Message:
