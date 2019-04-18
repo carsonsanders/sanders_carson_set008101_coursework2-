@@ -2,6 +2,7 @@ doctype html
 html
 	head
 		title= title
+		messages = messages
 		link(rel='stylesheet', href='/stylesheets/style.css')
 	body
 		
@@ -9,10 +10,11 @@ html
 			a(href="/ceaser") Ceaser Cipher 
 			a(href="/morse") Morse Code
 			a(class="active" href="/messageroom") Message Room
+			a(href="/login") Login
 			
 		
 		form(method="POST" action="/messageroom") Message:
 			input(name='message', type='text', size='30')
 			input(type='submit')
 			
-		p(id="mroom")
+		p(id="mroom") #{messages}

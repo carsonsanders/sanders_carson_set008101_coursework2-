@@ -1,6 +1,8 @@
 var path = require ('path');
 var dbPath = path.resolve(__dirname , 'cipher.db')
 var loggedIn = false;
+var loginStatus = "";
+var username = "";
 
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database(dbPath, (err => {
@@ -12,7 +14,7 @@ var db = new sqlite3.Database(dbPath, (err => {
 db.serialize( function () {
 db.run("CREATE TABLE IF NOT EXISTS users (username TEXT, password TEXT)");
 db.run("CREATE TABLE IF NOT EXISTS messages (message TEXT, username TEXT)");
-//db.run("INSERT INTO users VALUES('admin', 'pass')");
+db.run("INSERT INTO users VALUES('admin', 'pass')");
 });
 
 var express = require('express');
@@ -31,17 +33,35 @@ router.get('/morse', function(req, res, next) {
 	res.render('cipher', {title: 'morse'});
 });
 
-router.get('/login', function(req, res, next) {
-	res.render('login', {title: 'login'});
-});
 
 router.get('/messageroom', function(req, res, next) {
-	res.render('messageroom', {title: 'messageroom'});
+	var dbMessages = "";
+	
+	let sql = `SELECT message, 
+				username
+				FROM messages`;
+	
+	db.all(sql, [], (err, rows) => {
+		if (err) {
+			throw err;
+		}
+	rows.forEach((row) => {
+		console.log(row.message);
+		dbMessages += row.username + " " + row.message + " ";
+	});
+	res.render('messageroom', {messages: dbMessages});
+	});
+	
 })
 
 router.post('/messageroom', function(req, res, next) {
 	var message = req.body.message;
-	db.run(`INSERT INTO messages(message) VALUES(?)`, [message],function(err){
+	var messageUser;
+	
+	if(username == "") messageUser = "Anon:";
+	else messageUser = username + ":";
+	
+	db.run(`INSERT INTO messages(message, username) VALUES(?,?)`, [message, messageUser],function(err){
 		if (err){
 			return console.log(err.message);
 		}
@@ -49,6 +69,10 @@ router.post('/messageroom', function(req, res, next) {
 	});
 
 })
+
+router.get('/login', function(req, res, next) {
+	res.render('login', {title: loginStatus, username: username});
+});
 
 router.post('/login', function(req, res, next) {
 	var inputUser = req.body.username;
@@ -61,13 +85,19 @@ router.post('/login', function(req, res, next) {
 	let sql = `SELECT username, 
 				password
 				FROM users`;
-						
-	db.each(sql, [], (err, row) => {
+	
+	db.all(sql, [], (err, rows) => {
 		if (err) {
-			return console.error(err.message);
+			throw err;
 		}
-		if (row.username == inputUser && row.password == inputPass) res.redirect('/ceaser');
-		else res.redirect('/morse');
+	rows.forEach((row) => {
+		if(row.username == inputUser && row.password == inputPass) loggedIn = true;
+	});
+	if (loggedIn){
+		loginStatus = "loggedin";
+		username = inputUser;
+	}else loginStatus = "loginfail";
+	res.redirect('/login');
 	});
 	
 

@@ -10,14 +10,20 @@ html
 				div(class="topnav") 
 					a(class="active" href="/ceaser") Ceaser Cipher 
 					a(href="/morse") Morse Code
+					a(href="/messageroom") Message Room
+					a(href="/login") Login
 			when 'morse'
 				div(class="topnav") 
 					a(href="/ceaser") Ceaser Cipher 
 					a(class="active" href="/morse") Morse Code
+					a(href="/messageroom") Message Room
+					a(href="/login") Login
 			default
 				div(class="topnav") 
 					a(href="/ceaser") Ceaser Cipher 
 					a(href="/morse") Morse Code
+					a(href="/messageroom") Message Room
+					a(href="/login") Login
 			
 		form(id="form1") Message:
 			input(name='message', type='text', size='30')
