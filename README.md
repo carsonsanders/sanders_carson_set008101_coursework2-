@@ -1,5 +1,6 @@
 # sanders_carson_set008101_coursework2-
 Website #2 for web tech
+(Make sure NPM is installed! nodejs.org/en/download/)
 
 To run the website, open up the command prompt and navigate to the cipherapp directory.
 Then, type "set DEBUG=myapp:* & npm start" and hit enter
